@@ -1,0 +1,246 @@
+﻿@model Person
+
+<head>
+    <script src="https://kit.fontawesome.com/373f9e0213.js" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body style="background-color:#e5e5e5">
+    <h1>
+        Thông tin bệnh nhân
+    </h1>
+    @if (ViewBag.StatusChange != null)
+    {
+        <div class="alert-success">@ViewBag.StatusChange</div>
+    }
+    @if (ViewBag.DiedPerson != null)
+    {
+        <div class="alert-secondary">@ViewBag.DiedPerson</div>
+
+    }
+    @if (ViewBag.ExportPerson != null)
+    {
+        <div class="alert-warning">@ViewBag.ExportPerson</div>
+
+    }
+
+    <div class="container">
+        <div class="row">
+            <div id="person1" class="col-4">
+                <div style="text-align:center;margin-bottom:20px">
+                    <img style="margin-top:15px;border-radius:50%" src="~/img/img_avatar1.png" height="192" width="120" />
+                    <div>@Model.PersonFullName</div>
+                    @if (Model.Datedied != "")
+                    {
+                        <div id="certificate3">
+                            Đã tử vong
+                        </div>
+                    }
+                    else if (Model.DateExport != "")
+                    {
+                        <div id="certificate">
+                            Đã xuất viện
+                        </div>
+                    }
+                    else
+                    {
+                        <div data-idperson="@Model.PersonID" href="" id="certificate2">
+                            Đang điều trị
+                        </div>
+                    }
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <label>Tình trạng ban đầu</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@ViewBag.StatusF" />
+                        @if (Model.ChangeStatus != null)
+                        {
+                            <label style="font-weight:bold;color:red">Tình trạng mới nhất</label>
+                            <input class="form-control col-12" readonly placeholder="" value="@ViewBag.ChangeStatus" />
+                        }
+                    </div>
+                    @if (Model.Datedied == "" && Model.DateExport == "")
+                    {
+                        <div class="col-6">
+                            <div class="tranformstt2">
+                                <label>Chuyển tình trạng</label>
+                                <select id="selectstatus" class="form-control" asp-items="@ViewBag.Status" name="newstatus">
+                                    <option></option>
+                                </select>
+                                <a id="changecomfirm" href="#" class="btn btn-warning" data-idperson="@Model.PersonID">Xác nhận</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+
+            </div>
+
+            <div class="col-1">
+
+            </div>
+
+            <div id="person2" class="col-7">
+                <div>
+                    <h3 style="display:inline">
+                        Thông tin chi tiết
+                    </h3>
+                    <a href="@Url.Action("EditPerson","Home",new { personid = Model.PersonID})" style="display: inline; margin-left: 290px; color: red" class="btn btn-primary"> Chỉnh sửa </a>
+
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Mã BN</label>
+                            <input class="form-control col-12" readonly placeholder="" value="@Model.PersonID" />
+                            <label>Họ và tên</label>
+                            <input class="form-control col-12" readonly placeholder="" value="@Model.PersonFullName" />
+                            <label>Giới tính</label>
+                            @if (Model.Gender == 1)
+                            {
+                                <input class="form-control col-12" readonly placeholder="" value="Nam" />
+                            }
+                            else
+                            {
+                                <input class="form-control col-12" readonly placeholder="" value="Nữ" />
+                            }
+                            <label>Địa chỉ</label>
+                            <input class="form-control col-12" readonly placeholder="" value="@Model.PersonAddress" />
+                            <label>Ngày nhập viện</label>
+                            <input class="form-control col-12" readonly placeholder="" value="@Model.CreateDate.Remove(Model.CreateDate.Length-12)" />
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label>CMND</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.PatientId" />
+                        <label>Ngày sinh</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.DateOfBirh.Remove(@Model.DateOfBirh.Length-11)" />
+                        <label>Số điện thoại</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.Phone" />
+                        <label>Nơi điều trị</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@ViewBag.Place" />
+                        <label>Mã bệnh nhân liên quan</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.RelatedPersonId" />
+                    </div>
+                </div>
+                @if (Model.Datedied == "" && Model.DateExport == "")
+                {
+                    <div class="row">
+                        <div class="col-6">
+                            <div id="exportbutton" data-idperson="@Model.PersonID">Cho xuất viện</div>
+                        </div>
+                        <div class="col-6">
+                            <div id="diedbutton" data-idperson="@Model.PersonID">Xác nhận tử vong</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+@section Scripts{ 
+<script>
+    $(document).ready(function () {
+        $("#changecomfirm").click(function (event) {
+            event.preventDefault();
+            Swal.fire({
+                showDenyButton: true,
+                title: 'Thông báo!',
+                text: 'Đồng ý thay đổi trạng thái',
+                icon: 'warning',
+                confirmButtonText: 'Đồng ý',
+                denyButtonText: 'Hủy bỏ',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var idperson = $(this).attr("data-idperson");
+                    var e = document.getElementById("selectstatus");
+                    var status = e.value;
+                    $.ajax({
+                        type: "POST",               //update
+                        url: '/Home/ChangeStatusPerson',
+                        data: {
+                            personid: idperson,
+                            status: status
+                        },
+                        success: function (result) {
+                            window.alert = 'Change Success'
+                            window.location.href = "/Home/GetPersonDetail?PersonId=" + idperson;
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Trạng thái chưa được thay đổi,vui lòng thử lại', '', 'info')
+                }
+            })
+        });
+    });
+
+    $(document).ready(function () {
+        $("#exportbutton").click(function (event) {
+            event.preventDefault();
+            Swal.fire({
+                showDenyButton: true,
+                title: 'Thông báo',
+                text: 'Đồng ý cho bênh nhân xuất viện? ',
+                icon: 'warning',
+                confirmButtonText: 'Đồng ý',
+                denyButtonText: 'Hủy bỏ',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var idperson = $(this).attr("data-idperson");
+                    $.ajax({
+                        type: "POST",               //update
+                        url: '/Home/PersonExport',
+                        data: {
+                            personid: idperson,
+                        },
+                        success: function (result) {
+                            window.alert = 'Thay đổi thành công'
+                            window.location.href = "/Home/GetPersonDetail?PersonId=" +idperson;
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Trạng thái chưa được thay đổi,vui lòng thử lại', '', 'info')
+                }
+            })
+        });
+    });
+
+    $(document).ready(function () {
+        $("#diedbutton").click(function (event) {
+            event.preventDefault();
+            Swal.fire({
+                showDenyButton: true,
+                title: 'Thông báo',
+                text: 'Xác nhận bệnh nhân đã tử vong ',
+                icon: 'warning',
+                confirmButtonText: 'Đồng ý',
+                denyButtonText: 'Hủy bỏ',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var idperson = $(this).attr("data-idperson");
+                    $.ajax({
+                        type: "POST",               //update
+                        url: '/Home/DiedPerson',
+                        data: {
+                            personid: idperson,
+                        },
+                        success: function (result) {
+                            window.alert = 'Thay đổi thành công'
+                            window.location.href = "/Home/GetPersonDetail?PersonId=" + idperson;
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Trạng thái chưa được thay đổi,vui lòng thử lại', '', 'info')
+                }
+            })
+        });
+    });
+
+
+</script>
+}

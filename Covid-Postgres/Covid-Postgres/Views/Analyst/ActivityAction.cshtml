@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Covid_Postgres.Models.ActivityVm>
+
+@{
+    ViewData["Title"] = "Activity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Lịch sử hoạt động của @User.Identity.Name</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Activity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DayCreate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Activity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DayCreate)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

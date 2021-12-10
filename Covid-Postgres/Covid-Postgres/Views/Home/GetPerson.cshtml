@@ -1,0 +1,123 @@
+﻿@model HomeVm
+@{ 
+    Layout = null;
+}
+    <head>
+        <script type="text/javascript" src="~/js/myscript.js"></script>
+    </head>
+
+<div class="fullfield">
+    <div class="field2 row" style="border-radius:10px">
+        <div class="col-6 field2Left">
+            <div>
+                <h3 style="display:inline">Thông tin bệnh nhân</h3>
+                <a href="@Url.Action("GetPersonDetail","Home",new { PersonId = Model.Person.PersonID })" style="display:inline;margin-left:20px;color:red" class="btn btn-primary"> Chi tiết</a>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <img style="margin-top:15px" src="~/img/img_avatar1.png" height="192" width="120" />
+                    @if (Model.Person.Datedied != "")
+                    {
+                        <div id="certificate3">
+                            Đã tử vong
+                        </div>
+                    }
+                    else if (Model.Person.DateExport != "")
+                    {
+                        <div id="certificate">
+                            Đã xuất viện
+                        </div>
+                    }
+                    else
+                    {
+                        <div data-idperson="@Model.Person.PersonID" href="" id="certificate2">
+                            Đang điều trị
+                        </div>
+                        @*<a id="certificate4">
+                            Xác nhận tử vong
+                        </a>*@
+                    }
+
+
+                </div>
+                <div class="col-5">
+                    <div class="form-group">
+                        <label>Mã BN</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PersonID" />
+                        <label>Họ và tên</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PersonFullName" />
+                        <label>Giới tính</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.Person.Gender" />
+                        <label>Địa chỉ</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PersonAddress" />
+                        @if (Model.Person.ChangeStatus != null)
+                        {
+                            <label style="font-weight:bold;color:red">Tình trạng mới nhất</label>
+                            <input class="form-control col-12" readonly placeholder="" value="@Model.Person.ChangeStatus" />
+                        }
+                        
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label>CMND</label>
+                    <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PatientId" />
+                    <label>Ngày sinh</label>
+                    <input class="form-control col-12" readonly placeholder="" value="@Model.Person.DateOfBirh" />
+                    <label>Số điện thoại</label>
+                    <input class="form-control col-12" readonly placeholder="" value="@Model.Person.Phone" />
+                    <label>Nơi điều trị</label>
+                    <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PlaceOfTreatmentId" />
+                    <label>Tình trạng ban đầu</label>
+                    <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PersonStatus" />
+                </div>
+            </div>
+            <h3 style="margin-bottom:10px">Bệnh nhân liên quan</h3>
+            <div id="tablerelate">
+                <table class="table">
+                    <tr>
+                        <th>Mã bệnh nhân</th>
+                        <th>Tên Bệnh nhân</th>
+                        <th>Tình trạng</th>
+                        <th>Tình trạng mới nhất</th>
+                    </tr>
+                    @foreach (var item in Model.RelatedPerson)
+                    {
+                        <tr>
+                            <td>@item.PersonID</td>
+                            <td>@item.PersonFullName</td>
+                            <td>@item.PersonStatus</td>
+                            <td>@item.ChangeStatus</td>
+                        </tr>
+                    }
+
+
+                </table>
+            </div>
+        </div>
+        <div class="col-6 field2Right">
+            <div>
+                <h3 style="display:inline">Nơi điều trị</h3>
+                <a href="/Home/GetAllPlace" style="display:inline;margin-left:20px;color:red" class="btn btn-primary"> Chi tiết</a>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>Mã nơi điều trị</th>
+                    <th>Tên</th>
+                    <th>Số lượng chứa</th>
+                    <th>Số lượng hiện tại</th>
+
+                </tr>
+                @foreach (var item in Model.Place)
+                {
+                    <tr>
+                        <td>@item.PlaceId</td>
+                        <td>@item.PlaceName</td>
+                        <td>@item.Capacity</td>
+                        <td>@item.CurrenQuantity</td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

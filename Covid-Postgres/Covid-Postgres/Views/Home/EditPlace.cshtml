@@ -1,0 +1,43 @@
+﻿@model Covid_Postgres.Models.PlaceOfTreatment
+
+@{
+    ViewData["Title"] = "EditPlace";
+}
+
+<h1>Chỉnh sửa nơi điều trị</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditPlace">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input hidden  asp-for="PlaceId" class="form-control" />
+                
+            <div class="form-group">
+                <label asp-for="PlaceName" class="control-label"></label>
+                <input asp-for="PlaceName" class="form-control" />
+                <span asp-validation-for="PlaceName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Capacity" class="control-label"></label>
+                <input asp-for="Capacity" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrenQuantity" class="control-label"></label>
+                <input asp-for="CurrenQuantity" class="form-control" />
+                <span asp-validation-for="CurrenQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

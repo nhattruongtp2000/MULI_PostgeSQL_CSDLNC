@@ -1,0 +1,342 @@
+﻿body {
+    font-family: 'Times New Roman'
+}
+
+#taskall{
+    background-color:#e5e5e5;
+    margin-bottom:20px;
+}
+
+.field1 {
+    height: 50px;
+}
+
+.field2 {
+    height: 380px;
+}
+
+.field2Left {
+    background-color: rgba(0, 148, 94, 0.2);
+    overflow: scroll;
+    height: 380px;
+}
+
+.field2Right {
+    background-color: rgba(0, 148, 94, 0.2);
+    overflow: scroll;
+    height: 380px;
+}
+.field3 {
+    border: 1px solid black;
+    margin-top: 20px;
+    overflow: scroll;
+    height: 500px;
+}
+
+
+
+#tablerelate {
+    border: 1px solid black;
+}
+
+.row, .taskbar {
+    margin-left: auto;
+    margin-right: auto;
+}
+.taskbar {
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+
+
+#taskall {
+    border: 1px solid #e5e5e5;
+    border-radius:10px;
+ 
+}
+
+.taskbar div{
+   
+}
+.taskbar span {
+    font-size:24px;
+}
+#task1 {
+    height: 30px;
+    font-size:15px;
+    font-weight:bold;
+    border-radius:10px;
+    width: 160px;
+    background-color: rgba(255, 57, 43, 0.1);
+    text-align: center;
+    color:#FF392B
+}
+#task2 {
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+    height: 30px;
+    width: 160px;
+    text-align: center;
+    background-color: rgba(0, 148, 94, 0.2);
+    color: #00945E
+}
+#task3 {
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+    height: 30px;
+    width: 160px;
+    background-color: #505050;
+    text-align: center;
+    color: #222222;
+}
+#task4 {
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+    height: 30px;
+    width: 160px;
+    background-color: #fcf2e9;
+    text-align: center;
+    color: #E18425
+}
+
+#today {
+    font-size: 12px;
+}
+
+
+.btn{
+    background-color:antiquewhite;
+    border-radius:10px;
+    height:50px;
+}
+
+
+.fieldSearch{
+    height:70px;
+}
+
+
+
+
+.tranformstt {
+    border: 3px solid blue;
+    border-radius:10px;
+    text-align: center;
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.tranformstt2 {
+    border: 3px solid blue;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height:170px;
+}
+
+#certificate {
+    margin-top: 5px;
+    display: block;
+    border: 3px solid green;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: green;
+}
+
+#certificate2 {
+    margin-top: 5px;
+    display: block;
+    border: 3px solid #E18425;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #E18425;
+    cursor: pointer;
+}
+
+#certificate3 {
+    margin-top: 5px;
+    display: block;
+    border: 3px solid #222222;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #222222;
+}
+#certificate4 {
+    margin-top: 5px;
+    display: block;
+    border: 3px solid #222222;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: red;
+    background-color:#222222;
+    border-radius:10px;
+    cursor:pointer;
+    
+}
+
+#home_nav {
+    height: 40px;
+    background-color: #78b43d
+}
+.user-menu ul li{
+    float:right;
+}
+
+.user-menu li {
+    display: inline-block;
+}
+    .user-menu li a {
+        padding: 5px 15px;
+    }
+
+#listperson {
+    cursor:pointer;
+}
+
+.field-right
+{
+    clear:both;
+    float:left;
+    margin-left:58px;
+}
+
+#person1 {
+    height: 500px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+
+}
+#person2 {
+    height: 500px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+}
+
+#exportbutton {
+    border: 3px solid green;
+    color: green;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius:10px;
+}
+#exportbutton:hover{
+    background-color:green;
+    color:white;
+}
+
+#diedbutton {
+    border: 3px solid black;
+    color: black;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#diedbutton:hover{
+    background-color:black;
+    color:white;
+}
+
+#detailsbutton {
+    border: 3px solid #FF392B;
+    display: block;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+}
+    #detailsbutton:hover {
+        color: white;
+        background-color: #FF392B;
+    }
+
+#deletebutton {
+    border: 3px solid black;
+    display: block;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+    height:52.44px;
+    cursor:pointer;
+}
+
+    #deletebutton:hover {
+        color: white;
+        background-color: black;
+    }
+
+#search2 {
+    border: 2px solid #FF392B;
+    border-radius: 10px;
+    text-decoration: none;
+    height:40px;
+}
+
+    #search2:hover {
+        color: white;
+        background-color: #FF392B;
+    }
+
+#search3 {
+    border: 2px solid #FF392B;
+    border-radius: 10px;
+    text-decoration: none;
+    height: 40px;
+}
+
+    #search3:hover {
+        color: white;
+        background-color: #FF392B;
+    }
+
+#deleteplace {
+    border: 3px solid black;
+    display: block;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    width:50px;
+    color:black
+}
+
+#deleteplace:hover {
+    color: white;
+    background-color: black;
+}
+
+#editplace {
+    border: 3px solid #eb6619;
+    display: block;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100px;
+    display: inline-block;
+    color: #eb6619
+}
+
+    #editplace:hover {
+        color: white;
+        background-color: #eb6619;
+    }

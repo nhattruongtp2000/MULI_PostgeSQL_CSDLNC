@@ -1,0 +1,81 @@
+﻿@model AnalystVm
+    <head>
+        <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-pie.min.js"></script>
+    </head>
+    <body>
+        <h2>Tìm kiếm theo ngày </h2>
+        <input id="day" class="form-control col-6" type="date" />
+        <button class="click btn btn-primary">Tìm kiếm</button>
+
+        <div id="all">
+            <div class="row">
+                <div class="col-6">
+                    <div style="width: 500px;height:500px" id="container"></div>
+                    @if (ViewBag.Notice != null) { 
+                    <div style="color: rgba(0, 148, 94, 0.2) ">@ViewBag.Notice</div>                
+                    }
+                </div>
+                <div class="col-6 ">
+                    <div style=" border: 1px solid #808080;border-radius:10px;height:500px">
+                        <h2 style="margin-top:60px">Thống kê</h2>
+                        <div>
+                            <div style="margin-top:20px;display:inline"><img src="~/img/icons8-bed-48.png" />Tổng số ca nhập viện - @Model.Input</div> 
+                            <a href="/Analyst/GetPeople"  class="btn btn-primary" style="display:inline; margin-left:30px">Chi tiết</a>
+                        </div>
+                        <div>
+                            <div style="margin-top:20px;display:inline"><img src="~/img/icons8-logout-58.png" />Tổng số ca khỏi bệnh - @Model.Output </div>
+                            <a href="/Analyst/GetExport"style="display:inline; margin-left:19px" class="btn btn-primary">Chi tiết</a>
+                        </div>
+                        <div>
+                            <div style="margin-top:20px;display:inline"><img src="~/img/icons8-process-48.png" />Tổng số ca đang điều trị - @Model.Process</div>
+                            <a href="/Analyst/GetTreatment" style="display:inline; margin-left:14px" class="btn btn-primary" >Chi tiết</a>
+                        </div>
+                        <div>
+                            <div style="margin-top:20px;display:inline"><img src="~/img/icons8-dead-48.png" />Tổng số ca đang tử vong - @Model.Died</div>
+                            <a href="/Analyst/GetDied"style="display: inline; margin-left: 11px" class="btn btn-primary" >Chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+@section Scripts{ 
+    <script>
+        var data = anychart.data.set([
+            ['F0', @Model.F0],
+            ['F1', @Model.F1],
+            ['F2', @Model.F2],
+            ['F3', @Model.F3],
+            ['F4', @Model.F4],
+        ]);
+
+        var chart = anychart.pie(data)
+        // set the chart radius making a donut chart
+        chart.innerRadius('55%');
+
+        chart.title('Tổng sô ca nhiễm')
+        chart.container('container');
+       
+        chart.draw();
+
+        $(document).ready(function () {
+            $(".click").click(function () {
+                var day = $("#day").val();
+                $.ajax({
+                    type: 'POST',
+                    url:'/Analyst/AnalystPerDay',
+                    data: {
+                      request:day
+                    },
+                    success: function (result) {
+                        $("#all").html(result);
+                    }
+
+                });
+            });
+        });
+    </script>
+
+
+}

@@ -1,0 +1,54 @@
+﻿<head>
+    <style>
+        table{
+            border:solid 1px black;
+        }
+    </style>
+</head>
+
+<table class="table">
+    <tr>
+        <th>a</th>
+        <th>b</th>
+        <th>c</th>
+        <th>d</th>
+    </tr>
+    <tr id="row1">
+        <td>test1</td>
+        <td>test1</td>
+        <td>test1</td>
+        <td>test1</td>
+    </tr>
+    <tr id="row2" data-PersonId="1">
+        <td>test1</td>
+        <td>test1</td>
+        <td>test1</td>
+        <td>test1</td>
+    </tr>
+</table>
+
+@section Scripts
+{
+<script>
+    $(document).ready(function () {
+        $("#row2").click(function () {
+            var PersonId = $(this).attr("data-PersonId");
+            $.ajax(
+                {
+                    type: "POST",
+                    url:"/Home/GetPerson",
+                    data: {
+                        PersonId:PersonId
+                    },
+                    success: function (result) {
+                        $("#row1").html(result);
+                    }
+                });
+        });
+    });
+
+
+
+
+</script>
+}

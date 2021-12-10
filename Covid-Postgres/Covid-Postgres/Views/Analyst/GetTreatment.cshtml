@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Person>
+
+<h1>Danh sách đang điều trị</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonFullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaceOfTreatmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangeStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RelatedPersonId)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.PersonID
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonAddress)
+                </td>
+                @if (item.PersonStatus == 0)
+                {
+                    <td>F0</td>
+                }
+                else if (item.PersonStatus == 1)
+                {
+                    <td>F1</td>
+                }
+                else if (item.PersonStatus == 1)
+                {
+                    <td>F2</td>
+                }
+                else if (item.PersonStatus == 1)
+                {
+                    <td>F3</td>
+                }
+                else
+                {
+                    <td>F4</td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlaceOfTreatmentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChangeStatus)
+                </td>
+                <td>
+                    @item.CreateDate.Remove(item.CreateDate.Length - 12)
+                </td>
+                @if (item.Gender == 0)
+                {
+                    <td>Nữ</td>
+                }
+                else
+                {
+                    <td>Nam</td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.RelatedPersonId)
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

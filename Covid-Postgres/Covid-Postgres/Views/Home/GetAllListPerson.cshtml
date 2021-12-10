@@ -1,0 +1,326 @@
+﻿@model IEnumerable<Covid_Postgres.Models.Person>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "GetAllListPerson";
+}
+<head>
+    <script src="https://kit.fontawesome.com/373f9e0213.js" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<h1>Danh sách tất cả bệnh nhân</h1>
+
+<p>
+    <a href="/Home/AddPerson">Thêm bệnh nhân mới</a>
+</p>
+
+<div class="form-inline" style="display:inline-block;margin-bottom:10px">
+    <div>
+        <select id="selectsearch" style="width:310px" class="form-control col-6">
+            <option id="selectid">Tìm kiếm theo mã bệnh nhân</option>
+            <option id="selectname">Tìm kiếm theo tên bệnh nhân</option>
+        </select>
+
+        <select class="form-control">
+            <option>Sắp xếp</option>
+            <option id="orderByName2">Theo tên</option>
+            <option id="orderByCreated2">Theo ngày nhập viện</option>
+            <option id="orderById">Theo mã bệnh nhân</option>
+        </select>
+    </div>
+
+
+    <div id="divsearch1" style="display:block;margin-top:10px">
+        <input style="width:250px" id="searchval" placeholder="Nhập mã bệnh nhân" type="search" class="form-control form-control col-12" />
+        <a id="search2" href="#" class="btn" value="search2">Tìm kiếm</a>
+    </div>
+    <div id="divsearch2" style="display: none; margin-top: 10px">
+        <input style="display: inline; width: 250px" id="searchvall" placeholder="Nhập tên bệnh nhân" type="search" class="form-control" />
+        <a style="display:inline" id="search3" href="#" class="btn" value="search2">Tìm kiếm</a>
+    </div>
+
+
+</div>
+<div class="form-inline">
+  
+   
+</div>
+<div>
+    @if (ViewBag.AddPerson != null)
+    {
+        <div class="alert-warning">@ViewBag.AddPerson</div>
+    }
+    @if (ViewBag.DeletePerson != null)
+    {
+        <div class="alert-dark">@ViewBag.DeletePerson</div>
+    }
+    @if (ViewBag.EditPerson != null)
+    {
+    <div class="alert-success">@ViewBag.EditPerson</div>
+    }
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonFullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaceOfTreatmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangeStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RelatedPersonId)
+            </th>
+            <td>
+
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @item.PersonID
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PersonFullName)
+            </td>
+            <td>
+                @item.DateOfBirh.Remove(item.DateOfBirh.Length - 12)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PersonAddress)
+            </td>
+            @if (item.PersonStatus == 0)
+            {
+                <td>F0</td>
+            }
+            else if (item.PersonStatus == 1)
+            {
+                <td>F1</td>
+            }
+            else if (item.PersonStatus == 2)
+            {
+                <td>F2</td>
+            }
+            else if (item.PersonStatus == 3)
+            {
+                <td>F3</td>
+            }
+            else if (item.PersonStatus == 4)
+            {
+                <td>F4</td>
+            }
+            else
+            {
+                <td></td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.PlaceOfTreatmentId)
+            </td>
+            @if (item.ChangeStatus == 0)
+            {
+                <td>F0</td>
+            }
+            else if (item.ChangeStatus == 1)
+            {
+                <td>F1</td>
+            }
+            else if (item.ChangeStatus == 2)
+            {
+                <td>F2</td>
+            }
+            else if (item.PersonStatus == 3)
+            {
+                <td>F3</td>
+            }
+            else if (item.ChangeStatus == 4)
+            {
+                <td>F4</td>
+            }
+            else
+            {
+                <td></td>
+            }
+            <td>
+                @item.CreateDate.Remove(item.CreateDate.Length - 12)
+            </td>
+            @if (item.Gender == 0)
+            {
+                <td>Nữ</td>
+            }
+            else
+            {
+                <td>Nam</td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedPersonId)
+            </td>
+
+            <td><a class="" id="detailsbutton" href="@Url.Action("GetPersonDetail","Home",new {PersonId=item.PersonID })">Chi tiết</a></td>
+            <td><a id="deletebutton" data-idperson="@item.PersonID" href="@Url.Action("DeletePerson","Home",new {PersonId=item.PersonID })">Xóa</a></td>
+        </tr>
+        }
+
+    </tbody>
+
+</table>
+<div class="row">
+    <div class="col-md-12">
+        <div class="product-pagination text-center">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("GetAllListPerson", new { page = page }),
+new X.PagedList.Mvc.Common.PagedListRenderOptionsBase
+{
+    LiElementClasses = new string[] { "page-item" },
+    PageClasses = new string[] { "page-link" }
+
+})
+        </div>
+    </div>
+</div>
+
+@section Scripts{ 
+<script>
+    $(document).ready(function () {
+        $("#search2").click(function () {
+            var personid = $("#searchval").val();
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Home/SearchPerson2",
+                    data: {
+                        personid: personid
+                    },
+                    success: function (result) {
+                        $(".table").html(result);
+                    }
+                });
+        });
+    });
+
+    $(document).ready(function () {
+        $("#search3").click(function () {
+            var name = $("#searchvall").val();
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Home/SearchWithName",
+                    data: {
+                        name: name
+                    },
+                    success: function (result) {
+                        $(".table").html(result);
+                    }
+                });
+        });
+    });
+
+
+    $(document).ready(function () {
+
+        $("#orderByName2").click(function () {
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Home/OrderByName2",
+                    data: {
+                    },
+                    success: function (result) {
+                        
+                        $(".table").html(result);
+                    }
+                });
+        });
+    });
+
+    $(document).ready(function () {
+
+        $("#orderByCreated2").click(function () {
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Home/OrderByCreateDate2",
+                    data: {
+                    },
+                    success: function (result) {
+                        
+                        $(".table").html(result);
+                    }
+                });
+        });
+    });
+
+    $(document).ready(function () {
+
+        $("#orderById").click(function () {
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Home/OrderById",
+                    data: {
+                    },
+                    success: function (result) {
+
+                        $(".table").html(result);
+                    }
+                });
+        });
+    });
+
+    $(document).ready(function () {
+
+        $("#orderById").click(function () {
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Home/OrderById",
+                    data: {
+                    },
+                    success: function (result) {
+
+                        $(".table").html(result);
+                    }
+                });
+        });
+    });
+    
+
+    $(document).ready(function () {
+
+        $("#selectid").click(function () {
+            $("#divsearch2").css("display","none");
+            $("#divsearch1").css("display","block");
+        });
+
+        $("#selectname").click(function () {
+            $("#divsearch1").css("display","none");
+            $("#divsearch2").css("display","block");
+        });
+    });
+
+</script>
+}

@@ -1,0 +1,184 @@
+﻿@model HomeVm
+
+@{
+    Layout = null;
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/style.css" />
+    <script src="https://kit.fontawesome.com/373f9e0213.js" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="~/js/myscript.js"></script>
+</head>
+<div class="fullfield">
+    <div class="field2 row" style="border-radius:10px">
+        <div class="col-6 field2Left">
+            <h3>Thông tin bệnh nhân</h3>
+            <div class="row">
+                <div class="col-3">
+                    <img style="margin-top:15px" src="~/img/img_avatar1.png" height="192" width="120" />
+                    @if (Model.Person.Datedied != "")
+                    {
+                        <div id="certificate3">
+                            Đã tử vong
+                        </div>
+                    }
+                    else if (Model.Person.DateExport != "")
+                    {
+                        <div id="certificate">
+                            Đã xuất viện
+                        </div>
+                    }
+                    else
+                    {
+                        <div data-idperson="@Model.Person.PersonID" href="" id="certificate2">
+                            Chưa xuất viện
+                        </div>
+                        <a id="certificate4">
+                            Xác nhận tử vong
+                        </a>
+                    }
+
+                </div>
+                <div class="col-5">
+                    <div class="form-group">
+                        <label>Mã BN</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PersonID" />
+                        <label>Họ và tên</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PersonFullName" />
+                        <label>Giới tính</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.Person.Gender" />
+                        <label>Địa chỉ</label>
+                        <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PersonAddress" />
+                        @if (Model.Person.ChangeStatus != null)
+                        {
+                            <label style="font-weight:bold;color:red">Tình trạng mới nhất</label>
+                            <input class="form-control col-12" readonly placeholder="" value="@Model.Person.ChangeStatus" />
+                        }
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label>CMND</label>
+                    <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PatientId" />
+                    <label>Ngày sinh</label>
+                    <input class="form-control col-12" readonly placeholder="" value="@Model.Person.DateOfBirh.Remove(@Model.Person.DateOfBirh.Length-11)" />
+                    <label>Số điện thoại</label>
+                    <input class="form-control col-12" readonly placeholder="" value="@Model.Person.Phone" />
+                    <label>Nơi điều trị</label>
+                    <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PlaceOfTreatmentId" />
+                    <label>Tình trạng ban đầu</label>
+                    <input class="form-control col-12" readonly placeholder="" value="@Model.Person.PersonStatus" />
+                    
+                </div>
+            </div>
+            <h3 style="margin-bottom:10px">Bệnh nhân liên quan</h3>
+            <div id="tablerelate">
+                <table class="table">
+                    <tr>
+                        <th>Mã bệnh nhân</th>
+                        <th>Tên Bệnh nhân</th>
+                        <th>Tình trạng</th>
+                        <th>Tình trạng mới nhất</th>
+                    </tr>
+                    @foreach (var item in Model.RelatedPerson)
+                    {
+                        <tr>
+                            <td>@item.PersonID</td>
+                            <td>@item.PersonFullName</td>
+                            <td>@item.PersonStatus</td>
+                            <td>@item.ChangeStatus</td>
+                        </tr>
+                    }
+
+
+                </table>
+            </div>
+        </div>
+        <div class="col-6 field2Right">
+            <h3>Nơi điều trị</h3>
+            <table class="table">
+                <tr>
+                    <th>Mã nơi điều trị</th>
+                    <th>Tên</th>
+                    <th>Số lượng chứa</th>
+                    <th>Số lượng hiện tại</th>
+
+                </tr>
+                @foreach (var item in Model.Place)
+                {
+                    <tr>
+                        <td>@item.PlaceId</td>
+                        <td>@item.PlaceName</td>
+                        <td>@item.Capacity</td>
+                        <td>@item.CurrenQuantity</td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <h2 style="text-align:center">Danh sách bệnh nhân</h2>
+    <div class="field3">
+
+        <table class="table" id="listperson">
+            <tr>
+                <th>Mã BN</th>
+                <th>CMND</th>
+                <th>Họ và tên</th>
+                <th>Ngày sinh</th>
+                <th>Giới tính</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
+                <th>Tình trạng</th>
+                <th>Mã nơi điều trị</th>
+                <th>Ngày nhập viện</th>
+            </tr>
+            @foreach (var item in Model.People)
+            {
+        <tr class="clickk" id="listperson@(item.PersonID)" data-PersonId=@item.PersonID>
+            <td data-PersonId="@item.PersonID">@item.PersonID</td>
+            <td>@item.PatientId</td>
+            <td>@item.PersonFullName</td>
+            <td>@item.DateOfBirh.Remove(item.DateOfBirh.Length - 11)</td>
+            @if (item.Gender == 0)
+            {
+                <td>Nữ</td>
+            }
+            else
+            {
+                <td>Nam</td>
+            }
+
+            <td>@item.Phone</td>
+            <td>@item.PersonAddress</td>
+            @if (item.PersonStatus == 0)
+            {
+                <td>F0</td>
+            }
+            else if (item.PersonStatus == 1)
+            {
+                <td>F1</td>
+            }
+            else if (item.PersonStatus == 1)
+            {
+                <td>F2</td>
+            }
+            else if (item.PersonStatus == 1)
+            {
+                <td>F3</td>
+            }
+            else
+            {
+                <td>F4</td>
+            }
+            <td>@item.PlaceOfTreatmentId</td>
+            <td>@item.CreateDate.Remove(item.DateOfBirh.Length - 11)</td>
+            <td><a class="" id="detailsbutton" href="@Url.Action("GetPersonDetail","Home",new {PersonId=item.PersonID })">Chi tiết</a></td>
+        </tr>
+            }
+        </table>
+    </div>
+    <div style="text-align:center">
+        <a href="/Home/GetAllListPerson" class="btn btn-primary"> Xem chi tiết</a>
+    </div>
+</div>

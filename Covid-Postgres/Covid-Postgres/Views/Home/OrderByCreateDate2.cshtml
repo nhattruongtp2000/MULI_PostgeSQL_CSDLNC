@@ -1,0 +1,136 @@
+﻿@model IEnumerable<Person>
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" />
+
+</head>
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PersonID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PersonFullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfBirh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PersonAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PersonStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PlaceOfTreatmentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ChangeStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RelatedPersonId)
+                </th>
+                <td>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.PersonID
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PersonFullName)
+                    </td>
+                    <td>
+                        @item.DateOfBirh.Remove(item.DateOfBirh.Length - 12)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PersonAddress)
+                    </td>
+                    @if (item.PersonStatus == 0)
+                    {
+                        <td>F0</td>
+                    }
+                    else if (item.PersonStatus == 1)
+                    {
+                        <td>F1</td>
+                    }
+                    else if (item.PersonStatus == 2)
+                    {
+                        <td>F2</td>
+                    }
+                    else if (item.PersonStatus == 3)
+                    {
+                        <td>F3</td>
+                    }
+                    else if (item.PersonStatus == 4)
+                    {
+                        <td>F4</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PlaceOfTreatmentId)
+                    </td>
+                    @if (item.ChangeStatus == 0)
+                    {
+                        <td>F0</td>
+                    }
+                    else if (item.ChangeStatus == 1)
+                    {
+                        <td>F1</td>
+                    }
+                    else if (item.ChangeStatus == 2)
+                    {
+                        <td>F2</td>
+                    }
+                    else if (item.PersonStatus == 3)
+                    {
+                        <td>F3</td>
+                    }
+                    else if (item.ChangeStatus == 4)
+                    {
+                        <td>F4</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+                        @item.CreateDate.Remove(item.CreateDate.Length - 12)
+                    </td>
+                    @if (item.Gender == 0)
+                    {
+                        <td>Nữ</td>
+                    }
+                    else
+                    {
+                        <td>Nam</td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RelatedPersonId)
+                    </td>
+                    <td><a class="" id="detailsbutton" href="@Url.Action("GetPersonDetail","Home",new {PersonId=item.PersonID })">Chi tiết</a></td>
+                    <td><a id="deletebutton" data-idperson="@item.PersonID" href="@Url.Action("DeletePerson","Home",new {PersonId=item.PersonID })">Xóa</a></td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+</body>

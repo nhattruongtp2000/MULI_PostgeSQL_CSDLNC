@@ -1,0 +1,90 @@
+﻿@model AnalystVm
+@{ 
+    Layout = null;
+}
+<head>
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-pie.min.js"></script>
+    <link rel="stylesheet" href="~/css/style.css" />
+    <script src="https://kit.fontawesome.com/373f9e0213.js" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="~/js/myscript.js"></script>
+</head>
+@{ 
+    var a = ViewBag.Date;
+}
+<body>
+    <h4>Thống kê ngày @a.ToString("dd/MM/yyyy")</h4>
+    <div id="all">
+        <div class="row">
+            <div class="col-6">
+                <div style="width: 500px;height:500px" id="container"></div>
+                @if (ViewBag.Notice != null)
+                {
+                    <div style="color: rgba(0, 148, 94, 0.2) ">@ViewBag.Notice</div>
+                }
+            </div>
+            <div class="col-6 ">
+                <div style=" border: 1px solid #808080;border-radius:10px">
+                    <h2 style="margin-top:60px">Thống kê</h2>
+                    <div>
+                        <div style="margin-top: 20px; display: inline"><img src="~/img/icons8-bed-48.png" />Tổng số ca nhập viện trong ngày - @Model.Input</div>
+                        <a href="@Url.Action("GetPeopleDay","Analyst",new {request=ViewBag.Date})" class="btn btn-primary" style="display:inline; margin-left:30px">Chi tiết</a>
+                    </div>
+                    <div>
+                        <div style="margin-top: 20px; display: inline"><img src="~/img/icons8-logout-58.png" />Tổng số ca khỏi bệnh trong ngày - @Model.Output </div>
+                        <a href="@Url.Action("GetExportDay","Analyst",new {request=ViewBag.Date})" class="btn btn-primary" style="display:inline; margin-left:30px">Chi tiết</a>
+                    </div>
+                    <div>
+                        <div style="margin-top: 20px; display: inline"><img src="~/img/icons8-process-48.png" />Tổng số ca đang điều trị trong ngày- @Model.Process</div>
+                        <a href="@Url.Action("GetTreatmentDay","Analyst",new {request=ViewBag.Date})" class="btn btn-primary" style="display:inline; margin-left:30px">Chi tiết</a>
+                    </div>
+                    <div>
+                        <div style="margin-top: 20px; display: inline"><img src="~/img/icons8-dead-48.png" />Tổng số ca đang tử vong trong ngày - @Model.Died</div>
+                        <a href="@Url.Action("GetDiedDay","Analyst",new {request=ViewBag.Date})" class="btn btn-primary" style="display:inline; margin-left:30px">Chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var data = anychart.data.set([
+            ['F0', @Model.F0],
+            ['F1', @Model.F1],
+            ['F2', @Model.F2],
+            ['F3', @Model.F3],
+            ['F4', @Model.F4],
+        ]);
+
+        var chart = anychart.pie(data)
+        // set the chart radius making a donut chart
+        chart.innerRadius('55%');
+
+        chart.title('Tổng sô ca nhiễm')
+        chart.container('container');
+
+        chart.draw();
+
+        $(document).ready(function () {
+            $(".click").click(function () {
+                var day = $("#day").val();
+                $.ajax({
+                    type: 'POST',
+                    url:'/Analyst/AnalystPerDay',
+                    data: {
+                      request:day
+                    },
+                    success: function (result) {
+                        $("#all").html(result);
+                    }
+
+                });
+            });
+        });
+    </script>
+
+</body>
+
+    
+

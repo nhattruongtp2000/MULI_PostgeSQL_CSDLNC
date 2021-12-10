@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Covid_Postgres.Models.PlaceOfTreatment>
+
+@{
+    ViewData["Title"] = "GetAllPlace";
+}
+
+<h1>Danh sách nơi điều trị</h1>
+
+<p>
+    <a href="/Home/AddPlace">Thêm nơi điều trị mới</a>
+</p>
+
+@if (ViewBag.AddPlace != null)
+{
+    <div class="alert-warning">@ViewBag.AddPlace</div>
+}
+
+@if (ViewBag.EditPlace != null)
+{
+    <div class="alert-success">@ViewBag.EditPlace</div>
+}
+
+@if (ViewBag.DeletePlace != null)
+{
+    <div class="alert-dark">@ViewBag.DeletePlace</div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaceId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Capacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrenQuantity)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlaceId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlaceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Capacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrenQuantity)
+                </td>
+                <td>
+                    <a id="editplace" href="@Url.Action("EditPlace","Home",new {placeid=item.PlaceId })">Chỉnh sửa</a>
+                    <a id="deleteplace" href="@Url.Action("DeletePlace","Home",new {placeid=item.PlaceId })">Xóa</a>
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>

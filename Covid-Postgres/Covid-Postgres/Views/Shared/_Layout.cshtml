@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Covid_Postgres</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    @if (User.Identity.Name != null)
+    {
+        <div id="home_nav">
+
+            <div class="field-right">
+                <a href="/Home/Index">  <img width="40" src="~/Images/logoboyte.png" /></a>
+                <a style="margin-left:50px;font-size:20px;text-decoration:none" href="/Home/GetAllListPerson"> Bệnh nhân  </a>
+                <a style="margin-left: 25px; font-size: 20px;text-decoration:none" href="/Home/GetAllPlace"> Nơi điều trị </a>
+            </div>
+            
+
+            <div class="user-menu">
+                <ul>
+                    <li>
+                        <a style="color:black" href="@Url.ActionLink("Logout", "Account")"><i class="fa fa-sign-out"></i>Log out</a>
+                    </li>
+                    <li>
+                        <a style="color:black" href="@Url.ActionLink("ActivityAction", "Analyst")">@*<i class="fa fa-user">*@@*</i>*@ Lịch sử hoạt động </a>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-user"></i> Xin chào <span>@User.Identity.Name</span></a>
+                    </li>
+                </ul>
+            </div>
+           
+
+        </div>
+    }
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
+    </body>
+</html>
+
+@*<script>
+    $(document).ready(function () {
+        $("#changecomfirm").click(function (event) {
+            event.preventDefault();
+            Swal.fire({
+                showDenyButton: true,
+                title: 'Thông báo!',
+                text: 'Đồng ý thay đổi trạng thái',
+                icon: 'warning',
+                confirmButtonText: 'Đồng ý',
+                denyButtonText: 'Hủy bỏ',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var idperson = $(this).attr("data-idperson");
+                    var e = document.getElementById("selectstatus");
+                    var status = e.value;
+                    $.ajax({
+                        type: "POST",               //update
+                        url: '/Home/ChangeStatusPerson',
+                        data: {
+                            personid: idperson,
+                            status: status
+                        },
+                        success: function (result) {
+                            window.alert = 'Change Success'
+                            window.location.href = '/Home/Index'
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Trạng thái chưa được thay đổi,vui lòng thử lại', '', 'info')
+                }
+            })
+        });
+    });
+
+    $(document).ready(function () {
+        $("#certificate2").click(function (event) {
+            event.preventDefault();
+            Swal.fire({
+                showDenyButton: true,
+                title: 'Thông báo',
+                text: 'Đồng ý cho bênh nhân xuất viện? ',
+                icon: 'warning',
+                confirmButtonText: 'Đồng ý',
+                denyButtonText: 'Hủy bỏ',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var idperson = $(this).attr("data-idperson");
+                    $.ajax({
+                        type: "POST",               //update
+                        url: '/Home/PersonExport',
+                        data: {
+                            personid: idperson,
+                        },
+                        success: function (result) {
+                            window.alert = 'Thay đổi thành công'
+                            window.location.href = '/Home/Index'
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Trạng thái chưa được thay đổi,vui lòng thử lại', '', 'info')
+                }
+            })
+        });
+    });
+
+    $(document).ready(function () {
+        $("#certificate4").click(function (event) {
+            event.preventDefault();
+            Swal.fire({
+                showDenyButton: true,
+                title: 'Thông báo',
+                text: 'Xác nhận bệnh nhân đã tử vong ',
+                icon: 'warning',
+                confirmButtonText: 'Đồng ý',
+                denyButtonText: 'Hủy bỏ',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var idperson = $(this).attr("data-idperson");
+                    $.ajax({
+                        type: "POST",               //update
+                        url: '/Home/DiedPerson',
+                        data: {
+                            personid: idperson,
+                        },
+                        success: function (result) {
+                            window.alert = 'Thay đổi thành công'
+                            window.location.href = '/Home/Index'
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Trạng thái chưa được thay đổi,vui lòng thử lại', '', 'info')
+                }
+            })
+        });
+    });
+</script>*@
